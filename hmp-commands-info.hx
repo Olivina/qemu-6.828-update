@@ -230,6 +230,13 @@ ERST
         .help       = "show the active virtual memory mappings",
         .cmd        = hmp_info_mem,
     },
+    {
+        .name        = "pg",
+        .args_type    = "",
+        .params     = "",
+        .help       = "show the page table",
+        .cmd = pg_info,
+    },
 #endif
 
 SRST

@@ -1749,3 +1749,14 @@ ERST
                       "\n\t\t\t -b to specify dirty bitmap as method of calculation)",
         .cmd        = hmp_calc_dirty_rate,
     },
+SRST
+print page info
+ERST
+
+    {
+        .name       = "page_info",
+        .args_type  = "",
+        .params     = "".
+        .help       = "show the page table",
+        .cmd        = pg_info,
+    },

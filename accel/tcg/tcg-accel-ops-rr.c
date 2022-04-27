@@ -27,10 +27,12 @@
 #include "sysemu/tcg.h"
 #include "sysemu/replay.h"
 #include "sysemu/cpu-timers.h"
+#include "sysemu/runstate.h"
 #include "qemu/main-loop.h"
 #include "qemu/notify.h"
 #include "qemu/guest-random.h"
 #include "exec/exec-all.h"
+#include "exec/gdbstub.h"
 
 #include "tcg-accel-ops.h"
 #include "tcg-accel-ops-rr.h"
@@ -225,6 +227,17 @@ static void *rr_cpu_thread_fn(void *arg)
                     icount_process_data(cpu);
                 }
                 qemu_mutex_lock_iothread();
+                if (r == EXCP_TRIPLE) {
+                    cpu_dump_state(cpu, stderr, 0);
+                    fprintf(stderr, "Triple fault.  Halting for inspection via"
+                             " QEMU monitor.\n");
+                    if (gdbserver_running())
+                        r = EXCP_DEBUG;
+                    else {
+                        vm_stop(RUN_STATE_DEBUG);
+                        break;
+                    }
+                }
 
                 if (r == EXCP_DEBUG) {
                     cpu_handle_guest_debug(cpu);

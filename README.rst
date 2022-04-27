@@ -2,6 +2,21 @@
 QEMU README
 ===========
 
+Note About This Fork
+====================
+
+This is the 6.828 patched version of qemu. The original patched version
+site is https://github.com/mit-pdos/6.828-qemu.git, but its too old and 
+cannot compile successfully in many nowadays Linux Distributions.
+
+So I extracted the 6.828 patch from the original version and patched 
+then into the newest qemu release. Patched features include printing
+register info when TripleFault occurs and qemu monitor's printing 
+pagetable. Tested in openSUSE Leap 15.3.
+
+Introduction
+============
+
 QEMU is a generic and open source machine & userspace emulator and
 virtualizer.
 

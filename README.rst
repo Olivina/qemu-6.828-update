@@ -10,12 +10,12 @@ site is https://github.com/mit-pdos/6.828-qemu.git, but its too old and
 cannot compile successfully in many nowadays Linux Distributions.
 
 So I extracted the 6.828 patch from the original version and patched 
-then into the newest qemu release. Patched features include printing
-register info when TripleFault occurs and qemu monitor's printing 
-pagetable. Tested in openSUSE Leap 15.3.
+then into the newest qemu release. The patched feature is printing page 
+table info. It has some problems when the TripleFault occurs so the qemu
+monitor does not print register info. You may print it manually. 
 
-BUT!!! 7.0 has a fatal bug: it cannot use cpus!!
-Please use stable 6.1 version.
+NOTE!!! 7.0 has a fatal bug: it cannot use multiple CPUS!!
+Please use stable 6.1 version instead.
 
 Introduction
 ============

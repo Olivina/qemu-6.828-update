@@ -14,6 +14,9 @@ then into the newest qemu release. Patched features include printing
 register info when TripleFault occurs and qemu monitor's printing 
 pagetable. Tested in openSUSE Leap 15.3.
 
+BUT!!! 7.0 has a fatal bug: it cannot use cpus!!
+Please use stable 6.1 version.
+
 Introduction
 ============
 

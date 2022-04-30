@@ -35,6 +35,8 @@
 #include "tcg-accel-ops.h"
 #include "tcg-accel-ops-rr.h"
 #include "tcg-accel-ops-icount.h"
+#include "exec/gdbstub.h"
+#include "sysemu/runstate.h"
 
 /* Kick all RR vCPUs */
 void rr_kick_vcpu_thread(CPUState *unused)
@@ -228,6 +230,18 @@ static void *rr_cpu_thread_fn(void *arg)
                 }
                 qemu_mutex_lock_iothread();
 
+
+				if (r == EXCP_TRIPLE) {
+					cpu_dump_state(cpu, stderr, 0);
+					fprintf(stderr, "Triple fault.  Halting for inspection via"
+					        " QEMU monitor.\n");
+					if (gdbserver_running())
+					    r = EXCP_DEBUG;
+					else {
+					    vm_stop(RUN_STATE_DEBUG);
+						break;
+					}
+				}
                 if (r == EXCP_DEBUG) {
                     cpu_handle_guest_debug(cpu);
                     break;

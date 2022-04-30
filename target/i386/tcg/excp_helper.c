@@ -61,8 +61,13 @@ static int check_exception(CPUX86State *env, int intno, int *error_code,
 
         qemu_log_mask(CPU_LOG_RESET, "Triple fault\n");
 
+
+#if 0
         qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
         return EXCP_HLT;
+#else
+		return EXCP_TRIPLE;
+#endif
     }
 #endif
 

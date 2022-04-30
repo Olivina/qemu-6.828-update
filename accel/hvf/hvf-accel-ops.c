@@ -412,6 +412,17 @@ static void *hvf_cpu_thread_fn(void *arg)
     do {
         if (cpu_can_run(cpu)) {
             r = hvf_vcpu_exec(cpu);
+			if (r == EXCP_TRIPLE) {
+                cpu_dump_state(cpu, stderr, fprintf, 0);
+                fprintf(stderr, "Triple fault.  Halting for inspection via"
+                        " QEMU monitor.\n");
+                if (gdbserver_running())
+                    r = EXCP_DEBUG;
+                else {
+                    vm_stop(RUN_STATE_DEBUG);
+                    break;
+                }
+            }
             if (r == EXCP_DEBUG) {
                 cpu_handle_guest_debug(cpu);
             }

@@ -189,3 +189,5 @@ extern bool gdb_has_xml;
 extern const char *const xml_builtin[][2];
 
 #endif
+
+int gdbserver_running(void);
